@@ -9,3 +9,4 @@ psycopg2==2.7.6.1
 pytz==2018.5
 psycopg2-binary==2.7.6.1
 django-rest-framework==0.1.0
+reportlab==3.5.11
