@@ -5,6 +5,16 @@ from django.forms import inlineformset_factory,formset_factory
 from django.contrib.auth.decorators import login_required
 from .models import *
 from django.contrib.admin.views.decorators import staff_member_required
+from django.http import HttpResponse
+from io import BytesIO
+from reportlab.pdfgen import canvas 
+from reportlab.lib.pagesizes import A4,letter
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.enums import TA_CENTER
+from reportlab.platypus import Paragraph,Table,TableStyle,SimpleDocTemplate,Image,Spacer
+from reportlab.lib.units import cm 
+from reportlab.lib import colors 
+from reportlab.lib.colors import orange,black,red
 # Create your views here.
 
 def vista_login(request):
@@ -641,3 +651,51 @@ def vista_reporte(request):
 		else:
 			pass
 	return render(request,'ver_reporte.html',locals())
+
+def vista_reporte_material(request):
+	response =HttpResponse(content_type='application/pdf')
+	response ['content-Disposition'] = 'attachment; filename=Reporte.pdf'
+	buffer = BytesIO()
+	
+	doc = SimpleDocTemplate(buffer,
+			pagesizes = A4,
+			rightMargin = 20,
+			leftMargin  = 20,
+			topMarign = 60,
+			bottomMargin = 18,
+		)
+	materiales =[]
+
+
+	im=Image("static/imagenes/logo_preiser.png",width=70,height=70,hAlign='LEFT')
+	materiales.append(Spacer(1,0))
+
+	materiales.append(im);
+	
+	
+	styles = getSampleStyleSheet()
+
+	header = Paragraph('REPORTE DE MATERIALES DISPONIBLES',styles['Title'],)
+	materiales.append(header)
+	materiales.append(Spacer(2,25))
+	headings = ('Tipo de elemento','Nombre','Cantidad','Marca','Ficha','Estado','Cuentadante','Codigo_sena')
+	allmateriales =[(p.tipo_elemento,p.nombre,p.cantidad,p.marca,p.ficha,p.estado,p.cuentadante,p.codigo_sena) for p in Material.objects.filter(estado='Disponible')]
+    
+
+
+	t= Table([headings]+ allmateriales)
+	t.setStyle(TableStyle([
+		('TEXTCOLOR',(0,0),(7,0),colors.white),
+		('INNERGRID',(0,0),(-1,-1),0.25,colors.black),
+		('LINEVELOW',(0,0),(-1,-0),2,colors.teal),
+	 	('BACKGROUND',(0,0),(-1,0),colors.teal),
+		('BOX',(0,0),(-1,-1),0.25,colors.black),]))
+	
+	materiales.append(t)
+	doc.build(materiales)
+	response.write(buffer.getvalue())
+	buffer.close()
+	return response
+
+def vista_materiales_disponibles(request):
+	return render(request,'vista_materiales_disponibles.html',locals())

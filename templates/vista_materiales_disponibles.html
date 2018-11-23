@@ -1,0 +1,13 @@
+{%extends "base.html"%}
+{% block titulo %}
+	materiales disponibles
+{% endblock titulo %}
+{% block contenido %}
+	<h1 align="center">REPORTE DE MATERIALES DISPONIBLES   </h1> 
+
+	<h5>reporte de los materiales disponibles que hay en bodega con su respectivo
+	 tipo de elemento, nombre, cantidad, marca, ficha, estado, cuentadante, codigo sena </h5>
+
+	 <a href="{% url 'vista_reporte_material'%}" class="btn btn-block" id="des">descargar reporte</a>
+
+{% endblock contenido %}
