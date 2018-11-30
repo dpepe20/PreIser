@@ -1,7 +1,49 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import *
+import time
+#formulario de registro
+class register_form(forms.Form):
+	username =forms.CharField(widget=forms.TextInput(attrs={
+		'id':'username','class':'form-control','placeholder':'Nombre de Usuario','autofocus':'autofocus',
+		}))
+	email    =forms.EmailField(widget=forms.TextInput(attrs={
+		'id':'email','class':'form-control','placeholder':'Correo Electronico','autofocus':'autofocus',
+		}))
+	password_1 = forms.CharField(widget=forms.PasswordInput(render_value=False,attrs={
+		'id':'password','class':'form-control','placeholder':'Contraseña','autofocus':'autofocus',
+		}))
+	password_2 = forms.CharField(widget=forms.PasswordInput(render_value=False,attrs={
+		'id':'password2','class':'form-control','placeholder':'placeholder','autofocus':'autofocus',
+		}))
 
+	def clean_username(self):
+		username = self.cleaned_data['username']
+		try:
+			u= User.objects.get(username=username)
+		except User.DoesNotExist:
+			return username
+		raise forms.ValidationError('Nombre de Usuario ya Registrado')
+
+	def clean_email(self):
+		email = self.cleaned_data['email']
+		try:
+			email = User.objects.get(email=email)
+		except User.DoesNotExist:
+			return email
+		raise forms.ValidationError('Correo Electronico ya Existe')
+
+	def clean_password_2(self):
+		password_1 =self.cleaned_data['password_1']
+		password_2 =self.cleaned_data['password_2']
+		if not len(password_1)>7:
+			raise forms.ValidationError('La contraseña debe contener minimo 8 caracteres')
+		else:
+			pass 
+		if password_1==password_2:
+			pass
+		else:
+			raise forms.ValidationError('Las contraseñas no coinciden')
 class login_form (forms.Form):
 	user = forms.CharField(widget=forms.TextInput(attrs={'class':'input100','name':'username',
 														'placeholder':'Nombre de Usuario'}))
@@ -202,6 +244,38 @@ class Bodega_Material_form(forms.ModelForm):
 				}),
 
 		}
+	def clean_fecha_ingresa(self):
+		fecha_ingresa =self.cleaned_data['fecha_ingresa']
+		fecha_actual = time.strftime("%Y-%m-%d")
+		if str(fecha_actual)==str(fecha_ingresa):
+			pass
+		elif str(fecha_ingresa)>str(fecha_actual):
+			raise forms.ValidationError('La Fecha de ingreso no debe ser mayor a la fecha actual')
+		return fecha_ingresa
+class editar_bodega_material_form(forms.ModelForm):
+	class Meta:
+		model = Bodega_Material
+		fields = '__all__'
+		widgets= {
+			'fecha_ingresa' : forms.TextInput(attrs={
+				'class' : 'datepicker'
+				}),
+			'fecha_salida' : forms.TextInput(attrs={
+				'class' : 'datepicker'
+				}),
+
+		}
+	def clean_fecha_salida(self):
+		fecha_ingresa =self.cleaned_data['fecha_ingresa']
+		fecha_salida = self.cleaned_data['fecha_salida']
+		fecha_actual = time.strftime("%Y-%m-%d")
+		if str(fecha_ingresa)==str(fecha_salida):
+			pass
+		elif str(fecha_salida)<str(fecha_ingresa):
+			raise forms.ValidationError('La Fecha de salida no debe ser menor a la fecha de ingreso')
+		elif str(fecha_ingresa)>str(fecha_actual):
+			raise forms.ValidationError('La Fecha de ingreso no debe ser mayor a la fecha actual')
+		return fecha_salida
 
 class agregar_aprendiz_form(forms.ModelForm):
 	class Meta:

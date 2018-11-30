@@ -4,7 +4,8 @@ from .views import *
 urlpatterns =[
 	
 	#INICIO 
-
+#url de registro
+	path('registrar/',vista_register,name="vista_register"),
 	path('inicio/',vista_inicio,name='vista_inicio'),
 	path('',vista_login,name='vista_login'),
 	path('logout/',vista_logout,name="vista_logout"),

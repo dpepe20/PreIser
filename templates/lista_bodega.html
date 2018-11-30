@@ -13,23 +13,29 @@
               Lista de Bodegas
             </div>
             <div class="card-body">
-              <div class="btn_agregar">
-                <a href="{%url 'vista_agregar_bodega'%}" class="btn btn-secondary" id="agregar">Agregar Bodega</a>
-              </div>
+              {% if user.is_staff %}
+                <div class="btn_agregar">
+                  <a href="{%url 'vista_agregar_bodega'%}" class="btn btn-secondary" id="agregar">Agregar Bodega</a>
+                </div>
+              {% endif %}
               <div class="table-responsive">
                 <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th>nombre</th>
                       <th>foto</th>
-                      <th></th>
+                      {% if user.is_staff %}
+                        <th>Funciones</th>
+                      {% endif %}
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
                       <th>nombre</th>
                       <th>foto</th>
-                      <th></th>
+                      {% if user.is_staff %}
+                        <th>Funciones</th>
+                      {% endif %}
                     </tr>
                   </tfoot>
                   <tbody>
@@ -37,19 +43,21 @@
                  		<tr>
                  			<td>{{p.nombre}}</td>
                  			<td><img src="/media/{{p.foto}}"></td>
-                 			<td>
-                        <a href="{%url 'vista_ver_bodega' id_bod=p.id%}" class="btn btn-sm">
-                           <img src="{% static "imagenes/iconos/eye-2x.png" %}">
-                        </a>
+                      {% if user.is_staff %}
+                   			<td>
+                          <a href="{%url 'vista_ver_bodega' id_bod=p.id%}" class="btn btn-sm">
+                             <img src="{% static "imagenes/iconos/eye-2x.png" %}">
+                          </a>
 
-                        <a href="{%url 'vista_editar_bodega' id_bod=p.id%}" class="btn btn-sm">
-                          <img src="{% static "imagenes/iconos/pencil-2x.png" %}">
-                        </a>
+                          <a href="{%url 'vista_editar_bodega' id_bod=p.id%}" class="btn btn-sm">
+                            <img src="{% static "imagenes/iconos/pencil-2x.png" %}">
+                          </a>
 
-                        <a href="{%url 'vista_eliminar_bodega' id_bod=p.id%}" class="btn btn-sm">
-                          <img src="{% static "imagenes/iconos/trash-2x.png" %}">
-                        </a>
-                      </td>
+                          <a href="{%url 'vista_eliminar_bodega' id_bod=p.id%}" class="btn btn-sm">
+                            <img src="{% static "imagenes/iconos/trash-2x.png" %}">
+                          </a>
+                        </td>  
+                      {% endif %}
                  		</tr>
                  		{% empty %}
           						<tr>

@@ -16,7 +16,23 @@ from reportlab.lib.units import cm
 from reportlab.lib import colors 
 from reportlab.lib.colors import orange,black,red
 # Create your views here.
-
+@staff_member_required(login_url='vista_login')
+def vista_register(request):
+	formulario = register_form()
+	if request.method=='POST':
+		formulario = register_form(request.POST)
+		if formulario.is_valid():
+			usuario = formulario.cleaned_data['username']
+			correo = formulario.cleaned_data['email']
+			password_1= formulario.cleaned_data['password_1']
+			password_2=formulario.cleaned_data['password_2']
+			u=User.objects.create_user(username=usuario,email=correo,password=password_1)
+			u.save()
+			return render(request,'registro_exito.html',locals())
+		else:
+			return render(request,'registro.html',locals())
+	return render(request,'registro.html',locals())
+	
 def vista_login(request):
 	usu=""
 	cla=""
@@ -120,7 +136,7 @@ def vista_eliminar_nombre_material(request,id_nm):
 	nombre_material.delete()
 	return redirect('/lista_nombre_material/')
 
-@staff_member_required(login_url='vista_login')
+@login_required(login_url='vista_login')
 def vista_lista_nombre_material(request):
 	lista = Nombre_Material.objects.all()
 	return render(request,'lista_nombre_material.html',locals())
@@ -164,7 +180,7 @@ def vista_editar_material(request,id_material):
 	material = Material.objects.get(id=id_material)
 	lista_bodegas = Bodega_Material.objects.filter(material=material)
 	
-	Bodega_MaterialFormset = inlineformset_factory(Material,Bodega_Material,form=Bodega_Material_form,can_delete=False,extra=0)
+	Bodega_MaterialFormset = inlineformset_factory(Material,Bodega_Material,form=editar_bodega_material_form,can_delete=False,extra=0)
 	if material.tipo_elemento == 'Devolutivo':
 		if request.method == 'POST':
 			formulario = agregar_material_form(request.POST,request.FILES,instance=material)
@@ -177,7 +193,7 @@ def vista_editar_material(request,id_material):
 			formulario = agregar_material_form(instance=material)
 			bod = Bodega_MaterialFormset(instance=material)
 
-		return render(request,'vista_agregar_material.html',locals())
+		return render(request,'vista_editar_material_devolutivo.html',locals())
 	else:
 		if request.method == 'POST':
 			formulario = agregar_material_form(request.POST,request.FILES,instance=material)

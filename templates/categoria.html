@@ -12,36 +12,44 @@ Lista de Categorias
               Lista de Categorias
             </div>
             <div class="card-body">
-              <div class="btn_agregar">
-                <a href="{% url 'agr_categoria'%}" class="btn btn-secondary" id="agregar">Agregar Categoria</a>  
-              </div>
+              {% if user.is_staff %}
+                <div class="btn_agregar">
+                  <a href="{% url 'agr_categoria'%}" class="btn btn-secondary" id="agregar">Agregar Categoria</a>
+                </div>
+              {% endif %}
               <div class="table-responsive">
                 <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th>nombre</th>
-                      <th></th>
+                      {% if user.is_staff %}
+                        <th>Funciones</th>
+                      {% endif %}
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
                       <th>nombre</th>
-                      <th></th>
+                      {% if user.is_staff %}
+                        <th>Funciones</th>
+                      {% endif %}
                     </tr>
                   </tfoot>
                   <tbody>
                  	{% for p in lista %}
                  		<tr>
                  			<td>{{p.nombre}}</td>
-                 			<td>
-                        <a href="{% url 'editarr_categoria' id_cat=p.id %}" class="btn btn-sm">
-                          <img src="{% static "imagenes/iconos/pencil-2x.png" %}">
-                        </a>
+                      {% if user.is_staff %}
+                   			<td>
+                          <a href="{% url 'editarr_categoria' id_cat=p.id %}" class="btn btn-sm">
+                            <img src="{% static "imagenes/iconos/pencil-2x.png" %}">
+                          </a>
 
-                        <a href="{% url 'eliminarr_categoria' id_cat=p.id %}" class="btn btn-sm">
-                          <img src="{% static "imagenes/iconos/trash-2x.png" %}">
-                        </a>
-                      </td>
+                          <a href="{% url 'eliminarr_categoria' id_cat=p.id %}" class="btn btn-sm">
+                            <img src="{% static "imagenes/iconos/trash-2x.png" %}">
+                          </a>
+                        </td>
+                      {% endif %}
                  		</tr>
                  		{% empty %}
           						<tr>
