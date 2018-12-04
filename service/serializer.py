@@ -9,10 +9,10 @@ class Cuentadante_serializer(serializers.HyperlinkedModelSerializer):
 
 
 class Aprendiz_serializer(serializers.ModelSerializer):
-	prestamos = serializers.StringRelatedField(many=True)
+
 	class Meta:
 		model = Aprendiz
-		fields = ('id','url','nombre','identificacion','tipo_documento','estado','ficha','prestamos',)
+		fields = ('url','nombre','identificacion','tipo_documento','estado','ficha','id')
 
 class Material_serializer(serializers.ModelSerializer):
 	class Meta:
@@ -25,9 +25,9 @@ class Detalle_Prestamo_serializer(serializers.ModelSerializer):
 	class Meta:
 		model = Detalle_Prestamo
 		fields = ('id','url','material','estado_devolucion','cantidad','fecha_devolucion','materiales')
-		depth = 1
+		depth = 2
 
-class prestamo_serializer(serializers.HyperlinkedModelSerializer):
+class prestamo_serializer(serializers.ModelSerializer):
 
 	detalles = Detalle_Prestamo_serializer(many=True, read_only=True)
 
@@ -46,10 +46,12 @@ class Programa_serializer(serializers.HyperlinkedModelSerializer):
 		model = Programa
 		fields = ('url','nombre')
 
-class Bodega_Material_serializer(serializers.HyperlinkedModelSerializer):
+class Bodega_Material_serializer(serializers.ModelSerializer):
 	class Meta:
 		model = Bodega_Material
 		fields = ('material','bodega','fecha_ingresa','fecha_salida')
+		depth=2
+
 
 class Bodega_serializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
