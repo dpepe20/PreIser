@@ -96,7 +96,6 @@ class agregar_prestamoF(forms.ModelForm):
 
 
 class agregar_DPrestamoF(forms.ModelForm):
-	material=forms.ModelChoiceField(queryset=Material.objects.filter(estado='Disponible'))
 	class Meta:
 		model=Detalle_Prestamo
 		fields=['material','cantidad']
