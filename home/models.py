@@ -107,7 +107,7 @@ class Prestamo (models.Model):
 
 class Detalle_Prestamo(models.Model):
 	material=models.ForeignKey(Material, on_delete=models.CASCADE)
-	prestamo=models.ForeignKey(Prestamo, on_delete=models.CASCADE)
+	prestamo=models.ForeignKey(Prestamo, related_name="detalles", on_delete=models.CASCADE)
 	cantidad = models.IntegerField()
 
 	estado_elemento_prestamo=models.CharField(max_length=50,null=True,blank=True)
