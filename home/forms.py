@@ -84,7 +84,7 @@ class agregar_prestamoF(forms.ModelForm):
 
 	class Meta:
 		model=Prestamo
-		exculde =['estado']
+		exclude =['estado']
 		fields='__all__'
 		widgets = {
 		'fecha_prestamo':forms.TextInput(attrs={
