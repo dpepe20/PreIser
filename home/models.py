@@ -1,5 +1,5 @@
 from django.db import models
-
+import time
 # Create your models here.
 
 class Categoria (models.Model):
@@ -35,7 +35,7 @@ class Programa (models.Model):
 class Ficha (models.Model):
 	numero_ficha = models.IntegerField(unique=True)
 	fecha_inicio = models.DateField(auto_now=False, auto_now_add=False)
-	fecha_finalizacion = models.DateField(auto_now=False, auto_now_add=False)
+	fecha_finalizacion = models.DateField(auto_now=False, auto_now_add=False,null=True,blank=True)
 	estado= models.BooleanField(default=True)
 	programa = models.ForeignKey(Programa, on_delete= models.CASCADE)
 
@@ -90,17 +90,18 @@ class Material (models.Model):
 class Bodega_Material(models.Model):
 	material=models.ForeignKey(Material, on_delete=models.CASCADE)
 	bodega=models.ForeignKey(Bodega, on_delete=models.CASCADE)
-	fecha_ingresa=models.DateField(auto_now=False, auto_now_add=False)
+	fecha_ingresa=models.DateField(auto_now=False, auto_now_add=False,default=time.strftime("%Y-%m-%d"))
 	fecha_salida=models.DateField(auto_now=False, auto_now_add=False,null=True,blank=True)
 
 	def __str__ (self):
 		return str(self.material)
 
 class Prestamo (models.Model):
-	fecha_prestamo = models.DateField(auto_now=False, auto_now_add=False)
+	fecha_prestamo = models.DateField(auto_now=False, auto_now_add=False,default=time.strftime("%Y-%m-%d"))
 	estado = models.CharField(max_length=50)	
 	aprendiz = models.ForeignKey(Aprendiz, on_delete= models.CASCADE)
 	fecha_entrega=models.DateField(auto_now=False, auto_now_add=False)
+	encargado = models.CharField(max_length=50,null=True,blank=True)
 
 	def __str__ (self):
 		return self.estado
