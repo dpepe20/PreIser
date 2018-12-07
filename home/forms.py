@@ -93,6 +93,21 @@ class agregar_prestamoF(forms.ModelForm):
 			'class':'datepicker'
 			})
 		}
+		
+	def clean(self):
+		cleaned_data = super(agregar_prestamoF,self).clean()
+		fecha_prestamo =self.cleaned_data['fecha_prestamo']
+		fecha_entrega = self.cleaned_data['fecha_entrega']
+		fecha_actual = time.strftime("%Y-%m-%d")
+		if str(fecha_prestamo)>str(fecha_actual):
+			raise forms.ValidationError('La Fecha de prestamo no debe ser mayor a la fecha actual')
+		elif str(fecha_prestamo)<str(fecha_actual):
+			raise forms.ValidationError('La Fecha de prestamo no debe ser menor a la fecha actual')
+		elif fecha_entrega < fecha_prestamo:
+			raise forms.ValidationError('La fecha de entrega no debe ser menor a la fecha de prestamo') 
+		elif str(fecha_actual)==str(fecha_prestamo):
+			pass
+		return cleaned_data
 
 
 class agregar_DPrestamoF(forms.ModelForm):
