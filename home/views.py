@@ -15,6 +15,7 @@ from reportlab.platypus import Paragraph,Table,TableStyle,SimpleDocTemplate,Imag
 from reportlab.lib.units import cm 
 from reportlab.lib import colors 
 from reportlab.lib.colors import orange,black,red
+import time,datetime
 # Create your views here.
 @staff_member_required(login_url='vista_login')
 def vista_register(request):
@@ -547,6 +548,15 @@ def agr_ficha(request):
 		if formulario.is_valid():
 			prod = formulario.save(commit = False)
 			prod.status = True
+			a = prod.fecha_inicio.year + 2
+			m = prod.fecha_inicio.month
+			d = prod.fecha_inicio.day
+
+			fecha_fin = datetime.datetime(a,m,d)
+			fecha_fin = str(fecha_fin)
+			d = datetime.datetime.strptime(fecha_fin, '%Y-%m-%d %H:%M:%S')
+			d = d.strftime('%Y-%m-%d')
+			prod.fecha_finalizacion = d
 			prod.save()
 			formulario.save_m2m()
 			return redirect ('/ver_ficha')
@@ -560,7 +570,17 @@ def edit_ficha(request,id_fic):
 	if request.method == "POST":
 		formulario = ficha_form (request.POST,request.FILES, instance=fic)
 		if formulario.is_valid():
-			fic = formulario.save()
+			fic = formulario.save(commit=False)
+			a = fic.fecha_inicio.year + 2
+			m = fic.fecha_inicio.month
+			d = fic.fecha_inicio.day
+
+			fecha_fin = datetime.datetime(a,m,d)
+			fecha_fin = str(fecha_fin)
+			d = datetime.datetime.strptime(fecha_fin, '%Y-%m-%d %H:%M:%S')
+			d = d.strftime('%Y-%m-%d')
+			fic.fecha_finalizacion = d
+			fic.save()
 			return redirect ('/ver_ficha')
 	else:
 		formulario = ficha_form(instance=fic)
