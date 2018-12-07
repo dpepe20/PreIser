@@ -80,7 +80,6 @@ class agregar_marca_form(forms.ModelForm):
 		}
 #formularios de la tabla prestamo
 class agregar_prestamoF(forms.ModelForm):
-	estado=forms.ChoiceField(choices=([('Activo','Activo'),('Terminado','Terminado')]))
 
 	class Meta:
 		model=Prestamo
