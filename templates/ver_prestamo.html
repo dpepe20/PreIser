@@ -56,6 +56,35 @@
   </form>
 </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+      $('.tipo').hide();
+      $('label[for="id_detalles-0-tipo_daño"]').hide();
+      $('label[for="id_detalles-1-tipo_daño"]').hide();
+      $('label[for="id_detalles-2-tipo_daño"]').hide();
+      $('label[for="id_detalles-3-tipo_daño"]').hide();
+      $('label[for="id_detalles-4-tipo_daño"]').hide();
+      $('.estado').on('change',function(){
+      var selectValor = '#'+$(this).val();
+      if (selectValor=='#malo') {
+        $('label[for="id_detalles-0-tipo_daño"]').show();
+        $('label[for="id_detalles-1-tipo_daño"]').show();
+        $('label[for="id_detalles-2-tipo_daño"]').show();
+        $('label[for="id_detalles-3-tipo_daño"]').show();
+        $('label[for="id_detalles-4-tipo_daño"]').show();
+        $('.tipo').show();
+      }
+      else{
+        $('label[for="id_detalles-0-tipo_daño"]').hide();
+        $('label[for="id_detalles-1-tipo_daño"]').hide();
+        $('label[for="id_detalles-2-tipo_daño"]').hide();
+        $('label[for="id_detalles-3-tipo_daño"]').hide();
+        $('label[for="id_detalles-4-tipo_daño"]').hide();
+         $('.tipo').hide();
+      }
+    });
+  });
+</script>
   <script >
     $.datepicker.regional['es']={
       closeText:'Cerrar',
