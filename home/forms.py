@@ -262,6 +262,9 @@ class Bodega_Material_form(forms.ModelForm):
 				}),
 
 		}
+		labels = {
+		'bodega':'Ambiente'
+		}
 	def clean_fecha_ingresa(self):
 		fecha_ingresa =self.cleaned_data['fecha_ingresa']
 		fecha_actual = time.strftime("%Y-%m-%d")
@@ -282,6 +285,9 @@ class editar_bodega_material_form(forms.ModelForm):
 				'class' : 'datepicker'
 				}),
 
+		}
+		labels = {
+		'bodega':'Ambiente'
 		}
 	def clean_fecha_salida(self):
 		fecha_ingresa =self.cleaned_data['fecha_ingresa']
