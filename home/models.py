@@ -98,7 +98,7 @@ class Bodega_Material(models.Model):
 
 class Prestamo (models.Model):
 	fecha_prestamo = models.DateField(auto_now=False, auto_now_add=False,default=time.strftime("%Y-%m-%d"))
-	estado = models.CharField(max_length=50)	
+	estado = models.CharField(max_length=50,default='Activo')	
 	aprendiz = models.ForeignKey(Aprendiz, on_delete= models.CASCADE)
 	fecha_entrega=models.DateField(auto_now=False, auto_now_add=False)
 
