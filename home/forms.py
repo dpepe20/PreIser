@@ -133,10 +133,14 @@ class dev_prestamoF(forms.ModelForm):
 
 class dev_DPrestamoF(forms.ModelForm):
 	material=forms.ModelChoiceField(Material.objects.all(),disabled=True)
-	estado_devolucion=forms.ChoiceField(choices=([('bueno','bueno'),('malo','malo')]))
+	estado_devolucion=forms.ChoiceField(widget=forms.Select(attrs={
+		'class':'estado'
+		}) ,choices=([('bueno','bueno'),('malo','malo')]))
 	cantidad=forms.IntegerField()
 	estado_elemento_prestamo=forms.ChoiceField(choices=([('En Prestamo','En Prestamo'),('Entregado','Entregado')]))
-	tipo_daño=forms.ChoiceField(choices=([('Fisico','Fisico'),('Logico','Logico')]))
+	tipo_daño=forms.ChoiceField(widget=forms.Select(attrs={
+		'class':'tipo'
+		}),label='Tipo de Daño', choices=([('Fisico','Fisico'),('Logico','Logico')]))
 
 
 
