@@ -117,7 +117,7 @@ class agregar_DPrestamoF(forms.ModelForm):
 		widgets={
 		'material':forms.Select(attrs={
 			'required':'true'
-			)]
+			})
 		}
 #-----------------------------------------------------------------------------------------------------
 
