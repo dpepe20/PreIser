@@ -114,7 +114,11 @@ class agregar_DPrestamoF(forms.ModelForm):
 	class Meta:
 		model=Detalle_Prestamo
 		fields=['material','cantidad']
-
+		widgets={
+		'material':forms.Select(attrs={
+			'required':'true'
+			)]
+		}
 #-----------------------------------------------------------------------------------------------------
 
 class dev_prestamoF(forms.ModelForm):
