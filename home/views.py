@@ -738,53 +738,6 @@ def vista_materiales_disponibles(request):
 
 
 
-#REPORTE MATERIALES NO DISPOBNIBLES
-def reportenodisponible(request):
-	response =HttpResponse(content_type='application/pdf')
-	response ['content-Disposition'] = 'attachment; filename=Reporte.pdf'
-	buffer = BytesIO()
+
+
 	
-	doc = SimpleDocTemplate(buffer,
-			pagesizes = A4,
-			rightMargin = 20,
-			leftMargin  = 20,
-			topMarign = 60,
-			bottomMargin = 18,
-		)
-	materiales =[]
-
-
-	im=Image("static/imagenes/logo_preiser.png",width=70,height=70,hAlign='LEFT')
-	materiales.append(Spacer(1,0))
-
-	materiales.append(im);
-	
-	
-	styles = getSampleStyleSheet()
-
-	header = Paragraph('REPORTE DE MATERIALES No DISPONIBLES',styles['Title'],)
-	materiales.append(header)
-	materiales.append(Spacer(2,25))
-	headings = ('Tipo de elemento','Nombre','Cantidad','Marca','Ficha','Estado','Cuentadante','Codigo_sena')
-	allmateriales =[(p.tipo_elemento,p.nombre,p.cantidad,p.marca,p.ficha,p.estado,p.cuentadante,p.codigo_sena) for p in Material.objects.filter(estado='No Disponible')]
-    
-
-
-	t= Table([headings]+ allmateriales)
-	t.setStyle(TableStyle([
-		('TEXTCOLOR',(0,0),(7,0),colors.white),
-		('INNERGRID',(0,0),(-1,-1),0.25,colors.black),
-		('LINEVELOW',(0,0),(-1,-0),2,colors.teal),
-	 	('BACKGROUND',(0,0),(-1,0),colors.teal),
-		('BOX',(0,0),(-1,-1),0.25,colors.black),]))
-	
-	materiales.append(t)
-	doc.build(materiales)
-	response.write(buffer.getvalue())
-	buffer.close()
-	return response
-
-
-	#--------------------------------------------------------------------------------
-	def vista_materiales_no_disponibles(request):
-	return render(request,'vista_materiales_no_disponibles.html',locals())
