@@ -100,4 +100,7 @@ urlpatterns =[
 	path('reporte/',vista_reporte,name="vista_reporte"),
 	path('materiales_disponibles/',vista_materiales_disponibles,name="vista_materiales_disponibles"),
 	path('reporte_material/',vista_reporte_material,name="vista_reporte_material")
+	###
+	path('reporte_no_disponible',reportenodisponible,name='reporte_no_disponible'),
+	
 ]
