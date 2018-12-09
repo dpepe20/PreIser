@@ -3,6 +3,9 @@ from .views import *
 
 urlpatterns =[
 	
+	
+	
+	
 	#INICIO 
 #url de registro
 	path('registrar/',vista_register,name="vista_register"),
@@ -101,6 +104,5 @@ urlpatterns =[
 	path('materiales_disponibles/',vista_materiales_disponibles,name="vista_materiales_disponibles"),
 	path('reporte_material/',vista_reporte_material,name="vista_reporte_material")
 	
-	path('reporte_no_disponible',reportenodisponible,name='reportenodisponible'),
-	path('materiales_no_disponibles/',vista_materiales_no_disponibles,name="vista_materiales_no_disponibles"),
+	
 ]
