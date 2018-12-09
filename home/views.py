@@ -786,3 +786,5 @@ def reportenodisponible(request):
 
 
 	#--------------------------------------------------------------------------------
+	def vista_materiales_no_disponibles(request):
+	return render(request,'vista_materiales_no_disponibles.html',locals())
