@@ -783,6 +783,9 @@ def vista_reportes(request):
 	buffer.close()
 	return response
 
+def vista_materiales_no_disponibles(request):
+	return render(request,'vista_materiales_no_disponibles.html',locals())
+	
 
 
 	
