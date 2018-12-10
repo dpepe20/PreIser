@@ -44,6 +44,7 @@ urlpatterns =[
 	path('editar_material/<int:id_material>/',vista_editar_material,name="vista_editar_material"),
 	path('eliminar_material/<int:id_material>/',vista_eliminar_material,name="vista_eliminar_material"),
 	path('ver_material/<int:id_material>/',vista_ver_material,name="vista_ver_material"),
+	path('materiales_no_disponibles',vista_materiales_no_disponibles,name="vista_materiales_no_disponiblesl"),
 #----------------------------------------------------------------------------------------------------------
 #urls de devoluciones
 	path('devolucion/<int:id_prest>/',devolucion_prestamo,name='devolucion_prestamo'),
@@ -103,6 +104,7 @@ urlpatterns =[
 	path('reporte/',vista_reporte,name="vista_reporte"),
 	path('materiales_disponibles/',vista_materiales_disponibles,name="vista_materiales_disponibles"),
 	path('reporte_material/',vista_reporte_material,name="vista_reporte_material")
+	path('reportes/',vista_reportes,name='vista_reportes'),
 	
 	
 ]
