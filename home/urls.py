@@ -103,7 +103,7 @@ urlpatterns =[
 #urls de reportes
 	path('reporte/',vista_reporte,name="vista_reporte"),
 	path('materiales_disponibles/',vista_materiales_disponibles,name="vista_materiales_disponibles"),
-	path('reporte_material/',vista_reporte_material,name="vista_reporte_material")
+	path('reporte_material/',vista_reporte_material,name="vista_reporte_material"),
 	path('reportes/',vista_reportes,name="vista_reportes"),
 	
 	
