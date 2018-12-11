@@ -314,10 +314,6 @@ class agregar_aprendiz_form(forms.ModelForm):
 			'id': 'nombre','class':'form-control','placeholder':'Nombre',
 										'autofocus': 'autofocus'
 				}),
-			'apellido' : forms.TextInput(attrs={
-			'id': 'apellido','class':'form-control','placeholder':'Apellido',
-										'autofocus': 'autofocus'
-				}),
 			'identificacion' : forms.TextInput(attrs={
 				'id' : 'identificacion','class':'form-control','placeholder':'Numero de identificacion',
 										'autofocus': 'autofocus','type' : 'number'
