@@ -46,7 +46,6 @@ class Ficha (models.Model):
 
 class Aprendiz (models.Model):
 	nombre = models.CharField(max_length=100)
-	apellido = models.CharField(max_length=100)
 	identificacion = models.IntegerField(unique=True)
 	tipo_documento = models.CharField(max_length=50)
 	estado=models.BooleanField(default=True)
